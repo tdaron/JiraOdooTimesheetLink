@@ -1,4 +1,4 @@
-#Setup
+# Setup
 
 First, link aws cli with your AWS account
 
