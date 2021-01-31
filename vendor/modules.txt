@@ -1,0 +1,20 @@
+# github.com/aws/aws-lambda-go v1.22.0
+## explicit
+github.com/aws/aws-lambda-go/events
+github.com/aws/aws-lambda-go/lambda
+github.com/aws/aws-lambda-go/lambda/handlertrace
+github.com/aws/aws-lambda-go/lambda/messages
+github.com/aws/aws-lambda-go/lambdacontext
+# github.com/aws/aws-sdk-go v1.37.1
+## explicit
+# github.com/kolo/xmlrpc v0.0.0-20201022064351-38db28db192b
+## explicit
+github.com/kolo/xmlrpc
+# github.com/llonchj/godoo v0.0.0-20180820064327-3289aff48f4a
+## explicit
+# github.com/mjibson/esc v0.2.0
+## explicit
+# github.com/rakutentech/go-alertnotification v1.0.2
+## explicit
+# github.com/spf13/cobra v1.1.1
+## explicit

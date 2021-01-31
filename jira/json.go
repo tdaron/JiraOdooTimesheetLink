@@ -1,46 +1,58 @@
 package jira
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
+
 
 //Types for JSON Deserialization
-type JiraWorklog struct {
+type Worklog struct {
 	TimeSpentSeconds int `json:"timeSpentSeconds"`
+	Date string `json:"created"`
 }
 
-type JiraWorklogsField struct {
-	Worklogs []JiraWorklog `json:"worklogs"`
-
-}
-type JiraRequestFields struct {
-	TimesheetCode string `json:"customfield_10101"`
-	Worklog JiraWorklogsField `json:"worklog"`
+func (w *Worklog) GetDate() string {
+	return w.Date[0:10]
 }
 
-type JiraUser struct {
+func (w *Worklog) GetHours() float64 {
+	return float64(w.TimeSpentSeconds) / 3600
+}
+
+type WorklogsField struct {
+	Worklogs []Worklog `json:"worklogs"`
+
+}
+type RequestFields struct {
+	TimesheetCode string        `json:"customfield_10101"` //CUSTOM FIELD WITH ODOO TIMESHEET CODE
+	Worklog       WorklogsField `json:"worklog"`
+}
+
+type User struct {
 	Key string `json:"key"`
 	Email string `json:"emailAddress"`
 }
 
-type JiraIssue struct {
-	Key string `json:"key"`
-	Fields JiraRequestFields `json:"fields"`
+type Issue struct {
+	Key    string        `json:"key"`
+	Fields RequestFields `json:"fields"`
 
 }
 
-type JiraRequest struct {
-	User JiraUser `json:"user"`
-	Issue JiraIssue `json:"issue"`
+type Request struct {
+	User  User  `json:"user"`
+	Issue Issue `json:"issue"`
 
 }
 
-func NewWorklogRequest(body string) (JiraRequest, error) {
-	var jiraRequest JiraRequest
+func NewWorklogRequest(body string) (Request, error) {
+	var jiraRequest Request
 	err := json.Unmarshal([]byte(body),&jiraRequest)
 	return jiraRequest, err
 }
 
-func (r *JiraRequest) GetLastWorklogTime() int {
+func (r *Request) GetLastWorklog() Worklog {
 	var worklogs = r.Issue.Fields.Worklog.Worklogs
-	var lastWorklog = worklogs[len(worklogs)-1]
-	return lastWorklog.TimeSpentSeconds
+	var lastWorklog = worklogs[len(worklogs) -1]
+	return lastWorklog
 }
