@@ -73,7 +73,7 @@ func (c *Client) GetHrEmployees(ids []int64) (*HrEmployees, error) {
 // FindHrEmployee finds hr.employee record by querying it with criteria.
 func (c *Client) FindHrEmployee(criteria *Criteria) (*HrEmployee, error) {
 	hes := &HrEmployees{}
-	if err := c.SearchRead(HrEmployeeModel, criteria, NewOptions().Limit(1), hes); err != nil {
+	if err := c.SearchRead(HrEmployeeModel, criteria, NewOptions().Limit(1).FetchFields("name","id","work_email","user_id"), hes); err != nil {
 		if hes != nil && len(*hes) > 0 {
 			return &((*hes)[0]), err
 		}
