@@ -3,7 +3,6 @@ package teamsnotifier
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"jira-timesheet/jira"
 	"net/http"
 	"os"
@@ -53,7 +52,7 @@ func NewOdooError(request jira.Request, err error) Notification{
 					},
 					{
 						Name: "Worklog Time",
-						Value: fmt.Sprintf("%f", lastWorklog.GetHours()),
+						Value: lastWorklog.TimeSpent,
 					},
 					{
 						Name:"Timesheet Code",
@@ -86,7 +85,8 @@ func NewJiraError(err error) Notification{
 	}
 }
 
-func NewSuccess() Notification {
+func NewSuccess(request jira.Request) Notification {
+	var lastWorklog = request.GetLastWorklog()
 	return Notification{
 		Summary: "success",
 		Type: "MessageCard",
@@ -94,9 +94,27 @@ func NewSuccess() Notification {
 		Color: "00EE00",
 		Sections: []NotificationSection{
 			{
-				Title: "Request processed",
-				Subtitle: "Success",
+				Title: "Process Status",
+				Subtitle: "Done",
 				Image: "https://repository-images.githubusercontent.com/202264544/3ce58c00-19ab-11ea-8a01-81d62334b3ed",
+				Facts: []SectionFact{
+					{
+						Name: "Issue Key",
+						Value: request.Issue.Key,
+					},
+					{
+						Name: "Employee",
+						Value: request.User.Email,
+					},
+					{
+						Name: "Worklog Time",
+						Value: lastWorklog.TimeSpent,
+					},
+					{
+						Name:"Timesheet Code",
+						Value: request.Issue.Fields.TimesheetCode,
+					},
+				},
 				Markdown: true,
 
 			},

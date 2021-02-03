@@ -9,6 +9,7 @@ import (
 type Worklog struct {
 	TimeSpentSeconds int `json:"timeSpentSeconds"`
 	Date string `json:"created"`
+	TimeSpent string `json:"timeSpent"`
 }
 
 func (w *Worklog) GetDate() string {

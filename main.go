@@ -71,7 +71,7 @@ func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (events
 		return ErrorResponse(jiraRequest, err), nil
 	}
 
-	teamsnotifier.Notify(teamsnotifier.NewSuccess())
+	teamsnotifier.Notify(teamsnotifier.NewSuccess(jiraRequest))
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
 		Body:       "OK",
