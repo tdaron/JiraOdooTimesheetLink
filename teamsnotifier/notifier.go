@@ -36,7 +36,7 @@ func NewOdooError(request jira.Request, err error) Notification{
 		Summary: err.Error(),
 		Type: "MessageCard",
 		Context: "http://schema.org/extensions",
-		Color: "00EE00",
+		Color: "EE0000",
 		Sections: []NotificationSection{
 			{
 				Title: "Odoo Status",
@@ -55,6 +55,10 @@ func NewOdooError(request jira.Request, err error) Notification{
 						Name: "Worklog Time",
 						Value: fmt.Sprintf("%f", lastWorklog.GetHours()),
 					},
+					{
+						Name:"Timesheet Code",
+						Value: request.Issue.Fields.TimesheetCode,
+					},
 				},
 				Markdown: true,
 
@@ -69,11 +73,29 @@ func NewJiraError(err error) Notification{
 		Summary: err.Error(),
 		Type: "MessageCard",
 		Context: "http://schema.org/extensions",
-		Color: "00EE00",
+		Color: "EE0000",
 		Sections: []NotificationSection{
 			{
 				Title: "Jira Status",
 				Subtitle: err.Error(),
+				Image: "https://repository-images.githubusercontent.com/202264544/3ce58c00-19ab-11ea-8a01-81d62334b3ed",
+				Markdown: true,
+
+			},
+		},
+	}
+}
+
+func NewSuccess() Notification {
+	return Notification{
+		Summary: "success",
+		Type: "MessageCard",
+		Context: "http://schema.org/extensions",
+		Color: "00EE00",
+		Sections: []NotificationSection{
+			{
+				Title: "Request processed",
+				Subtitle: "Success",
 				Image: "https://repository-images.githubusercontent.com/202264544/3ce58c00-19ab-11ea-8a01-81d62334b3ed",
 				Markdown: true,
 

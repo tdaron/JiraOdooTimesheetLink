@@ -71,7 +71,7 @@ func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (events
 		return ErrorResponse(jiraRequest, err), nil
 	}
 
-	teamsnotifier.Notify(teamsnotifier.NewOdooError(jiraRequest, errors.New("SUCCESS")))
+	teamsnotifier.Notify(teamsnotifier.NewSuccess())
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
 		Body:       "OK",

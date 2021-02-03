@@ -1,7 +1,6 @@
 package odoo
 
 import (
-	"encoding/json"
 	"errors"
 	odoo "jira-timesheet/odoo_api_wrapper"
 	"os"
@@ -28,8 +27,7 @@ func CreateTimesheetLine(name string, email string, timesheetCode string, hours 
 	employeeSearch.Add("work_email","=",email)
 	employee, err := c.FindHrEmployee(&employeeSearch)
 	if err != nil || employee == nil{
-		em, _ := json.Marshal(employee)
-		return errors.New(string(em)+" - "+err.Error())
+		return errors.New("Can't find employee with email "+email)
 	}
 
 
