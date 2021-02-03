@@ -32,10 +32,6 @@ type HrEmployee struct {
 	CoachId                     *Many2One  `xmlrpc:"coach_id,omptempty"`
 	Color                       *Int       `xmlrpc:"color,omptempty"`
 	CompanyId                   *Many2One  `xmlrpc:"company_id,omptempty"`
-	ContractId                  *Many2One  `xmlrpc:"contract_id,omptempty"`
-	ContractIds                 *Relation  `xmlrpc:"contract_ids,omptempty"`
-	ContractWarning             *Bool      `xmlrpc:"contract_warning,omptempty"`
-	ContractsCount              *Int       `xmlrpc:"contracts_count,omptempty"`
 	CountryId                   *Many2One  `xmlrpc:"country_id,omptempty"`
 	CountryOfBirth              *Many2One  `xmlrpc:"country_of_birth,omptempty"`
 	CreateDate                  *Time      `xmlrpc:"create_date,omptempty"`
@@ -187,6 +183,9 @@ func (c *Client) GetHrEmployees(ids []int64) (*HrEmployees, error) {
 func (c *Client) FindHrEmployee(criteria *Criteria) (*HrEmployee, error) {
 	hes := &HrEmployees{}
 	if err := c.SearchRead(HrEmployeeModel, criteria, NewOptions().Limit(1), hes); err != nil {
+		if hes != nil && len(*hes) > 0 {
+			return &((*hes)[0]), err
+		}
 		return nil, err
 	}
 	if hes != nil && len(*hes) > 0 {

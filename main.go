@@ -10,11 +10,19 @@ import (
 	"jira-timesheet/teamsnotifier"
 	"jira-timesheet/utils"
 	"os"
+	"reflect"
 	"strings"
 )
 
-func ErrorResponse(e error) events.APIGatewayProxyResponse {
-	teamsnotifier.Notify(e)
+func ErrorResponse(request jira.Request, e error) events.APIGatewayProxyResponse {
+	var blank = jira.Request{}
+
+	if !reflect.DeepEqual(request, blank) {
+		teamsnotifier.Notify(teamsnotifier.NewOdooError(request, e))
+	} else {
+		teamsnotifier.Notify(teamsnotifier.NewJiraError(e))
+
+	}
 
 	return events.APIGatewayProxyResponse{
 		StatusCode: 500,
@@ -22,9 +30,9 @@ func ErrorResponse(e error) events.APIGatewayProxyResponse {
 	}
 }
 
-func preventOdooCrash(){
+func preventOdooCrash(request jira.Request){
 	if !odooCredsOk{
-		teamsnotifier.Notify(errors.New("Odoo connection error , please check your creds"))
+		teamsnotifier.Notify(teamsnotifier.NewOdooError(request, errors.New("Odoo connection error , please check your creds")))
 	}
 }
 
@@ -34,14 +42,14 @@ var odooCredsOk = false
 func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	jiraRequest, err := jira.NewWorklogRequest(request.Body)
 	if err != nil {
-		return ErrorResponse(err), nil
+		return ErrorResponse(jira.Request{}, err), nil
 	}
 
 	var odoo_whitelist = os.Getenv("ODOO_WHITELIST")
 	if  odoo_whitelist != "" {
 		var white_projects = strings.Split(odoo_whitelist,",")
 		if !utils.SliceContains(white_projects, jiraRequest.Issue.Fields.TimesheetCode) {
-			return ErrorResponse(errors.New(jiraRequest.Issue.Fields.TimesheetCode+" is not in the whitelist ( "+odoo_whitelist+")")), nil
+			return ErrorResponse(jiraRequest, errors.New(jiraRequest.Issue.Fields.TimesheetCode+" is not in the whitelist ( "+odoo_whitelist+")")), nil
 		}
 	}
 
@@ -49,7 +57,7 @@ func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (events
 
 	var lastWorklog = jiraRequest.GetLastWorklog()
 
-	defer preventOdooCrash() ////odoo panic if authentication fails, we have to notify user of bad creds
+	defer preventOdooCrash(jiraRequest) ////odoo panic if authentication fails, we have to notify user of bad creds
 
 	err = odoo.CreateTimesheetLine(
 		jiraRequest.Issue.Key,
@@ -60,10 +68,10 @@ func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (events
 	odooCredsOk = true
 
 	if err != nil {
-		return ErrorResponse(err), nil
+		return ErrorResponse(jiraRequest, err), nil
 	}
 
-	teamsnotifier.Notify(errors.New("SUCCESS"))
+	teamsnotifier.Notify(teamsnotifier.NewOdooError(jiraRequest, errors.New("SUCCESS")))
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
 		Body:       "OK",

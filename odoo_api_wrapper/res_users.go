@@ -36,8 +36,6 @@ type ResUsers struct {
 	CompanyName                   *String    `xmlrpc:"company_name,omptempty"`
 	CompanyType                   *Selection `xmlrpc:"company_type,omptempty"`
 	ContactAddress                *String    `xmlrpc:"contact_address,omptempty"`
-	ContractIds                   *Relation  `xmlrpc:"contract_ids,omptempty"`
-	ContractsCount                *Int       `xmlrpc:"contracts_count,omptempty"`
 	CountryId                     *Many2One  `xmlrpc:"country_id,omptempty"`
 	CreateDate                    *Time      `xmlrpc:"create_date,omptempty"`
 	CreateUid                     *Many2One  `xmlrpc:"create_uid,omptempty"`

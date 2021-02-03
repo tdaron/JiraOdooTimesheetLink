@@ -3,7 +3,10 @@ package teamsnotifier
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"jira-timesheet/jira"
 	"net/http"
+	"os"
 )
 
 type SectionFact struct {
@@ -27,25 +30,30 @@ type Notification struct {
 	Sections []NotificationSection `json:"sections"`
 }
 
-func NewNotification() Notification{
+func NewOdooError(request jira.Request, err error) Notification{
+	lastWorklog := request.GetLastWorklog()
 	return Notification{
-		Summary: "Test Notification",
+		Summary: err.Error(),
 		Type: "MessageCard",
 		Context: "http://schema.org/extensions",
 		Color: "00EE00",
 		Sections: []NotificationSection{
 			{
-				Title: "CoucouTitle",
-				Subtitle: "CoucouSubtitle",
+				Title: "Odoo Status",
+				Subtitle: err.Error(),
 				Image: "https://repository-images.githubusercontent.com/202264544/3ce58c00-19ab-11ea-8a01-81d62334b3ed",
 				Facts: []SectionFact{
 					{
-						Name: "Premier fact",
-						Value: "Value du premier fact",
+						Name: "Issue Key",
+						Value: request.Issue.Key,
 					},
 					{
-						Name: "Second Fact",
-						Value: "Value du second fact",
+						Name: "Employee",
+						Value: request.User.Email,
+					},
+					{
+						Name: "Worklog Time",
+						Value: fmt.Sprintf("%f", lastWorklog.GetHours()),
 					},
 				},
 				Markdown: true,
@@ -55,9 +63,28 @@ func NewNotification() Notification{
 	}
 }
 
-func Notify(e error) {
-	var notification = NewNotification()
-	notification.Summary = e.Error()
+
+func NewJiraError(err error) Notification{
+	return Notification{
+		Summary: err.Error(),
+		Type: "MessageCard",
+		Context: "http://schema.org/extensions",
+		Color: "00EE00",
+		Sections: []NotificationSection{
+			{
+				Title: "Jira Status",
+				Subtitle: err.Error(),
+				Image: "https://repository-images.githubusercontent.com/202264544/3ce58c00-19ab-11ea-8a01-81d62334b3ed",
+				Markdown: true,
+
+			},
+		},
+	}
+}
+
+
+
+func Notify(notification Notification) {
 	data, _ := json.Marshal(notification)
-	http.Post("https://en97xqx4zsb5.x.pipedream.net","application/json",bytes.NewReader(data))
+	http.Post(os.Getenv("TEAMS_WEBHOOK_URL"),"application/json",bytes.NewReader(data))
 }
