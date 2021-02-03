@@ -6,78 +6,9 @@ import (
 
 // ProjectTask represents project.task model.
 type ProjectTask struct {
-	LastUpdate               *Time      `xmlrpc:"__last_update,omptempty"`
-	Active                   *Bool      `xmlrpc:"active,omptempty"`
-	ActivityDateDeadline     *Time      `xmlrpc:"activity_date_deadline,omptempty"`
-	ActivityIds              *Relation  `xmlrpc:"activity_ids,omptempty"`
-	ActivityState            *Selection `xmlrpc:"activity_state,omptempty"`
-	ActivitySummary          *String    `xmlrpc:"activity_summary,omptempty"`
-	ActivityTypeId           *Many2One  `xmlrpc:"activity_type_id,omptempty"`
-	ActivityUserId           *Many2One  `xmlrpc:"activity_user_id,omptempty"`
-	AttachmentIds            *Relation  `xmlrpc:"attachment_ids,omptempty"`
-	ChildIds                 *Relation  `xmlrpc:"child_ids,omptempty"`
-	ChildrenHours            *Float     `xmlrpc:"children_hours,omptempty"`
-	Color                    *Int       `xmlrpc:"color,omptempty"`
-	CompanyId                *Many2One  `xmlrpc:"company_id,omptempty"`
-	CreateDate               *Time      `xmlrpc:"create_date,omptempty"`
-	CreateUid                *Many2One  `xmlrpc:"create_uid,omptempty"`
-	DateAssign               *Time      `xmlrpc:"date_assign,omptempty"`
-	DateDeadline             *Time      `xmlrpc:"date_deadline,omptempty"`
-	DateEnd                  *Time      `xmlrpc:"date_end,omptempty"`
-	DateLastStageUpdate      *Time      `xmlrpc:"date_last_stage_update,omptempty"`
-	DateStart                *Time      `xmlrpc:"date_start,omptempty"`
-	DelayHours               *Float     `xmlrpc:"delay_hours,omptempty"`
-	Description              *String    `xmlrpc:"description,omptempty"`
-	DisplayName              *String    `xmlrpc:"display_name,omptempty"`
-	DisplayedImageId         *Many2One  `xmlrpc:"displayed_image_id,omptempty"`
-	EffectiveHours           *Float     `xmlrpc:"effective_hours,omptempty"`
-	EmailCc                  *String    `xmlrpc:"email_cc,omptempty"`
-	EmailFrom                *String    `xmlrpc:"email_from,omptempty"`
 	Id                       *Int       `xmlrpc:"id,omptempty"`
-	KanbanState              *Selection `xmlrpc:"kanban_state,omptempty"`
-	KanbanStateLabel         *String    `xmlrpc:"kanban_state_label,omptempty"`
-	LegendBlocked            *String    `xmlrpc:"legend_blocked,omptempty"`
-	LegendDone               *String    `xmlrpc:"legend_done,omptempty"`
-	LegendNormal             *String    `xmlrpc:"legend_normal,omptempty"`
-	ManagerId                *Many2One  `xmlrpc:"manager_id,omptempty"`
-	MessageChannelIds        *Relation  `xmlrpc:"message_channel_ids,omptempty"`
-	MessageFollowerIds       *Relation  `xmlrpc:"message_follower_ids,omptempty"`
-	MessageIds               *Relation  `xmlrpc:"message_ids,omptempty"`
-	MessageIsFollower        *Bool      `xmlrpc:"message_is_follower,omptempty"`
-	MessageLastPost          *Time      `xmlrpc:"message_last_post,omptempty"`
-	MessageNeedaction        *Bool      `xmlrpc:"message_needaction,omptempty"`
-	MessageNeedactionCounter *Int       `xmlrpc:"message_needaction_counter,omptempty"`
-	MessagePartnerIds        *Relation  `xmlrpc:"message_partner_ids,omptempty"`
-	MessageUnread            *Bool      `xmlrpc:"message_unread,omptempty"`
-	MessageUnreadCounter     *Int       `xmlrpc:"message_unread_counter,omptempty"`
 	Name                     *String    `xmlrpc:"name,omptempty"`
-	Notes                    *String    `xmlrpc:"notes,omptempty"`
-	ParentId                 *Many2One  `xmlrpc:"parent_id,omptempty"`
-	PartnerId                *Many2One  `xmlrpc:"partner_id,omptempty"`
-	PlannedHours             *Float     `xmlrpc:"planned_hours,omptempty"`
-	PortalUrl                *String    `xmlrpc:"portal_url,omptempty"`
-	Priority                 *Selection `xmlrpc:"priority,omptempty"`
-	Progress                 *Float     `xmlrpc:"progress,omptempty"`
 	ProjectId                *Many2One  `xmlrpc:"project_id,omptempty"`
-	RemainingHours           *Float     `xmlrpc:"remaining_hours,omptempty"`
-	SaleLineId               *Many2One  `xmlrpc:"sale_line_id,omptempty"`
-	Sequence                 *Int       `xmlrpc:"sequence,omptempty"`
-	StageId                  *Many2One  `xmlrpc:"stage_id,omptempty"`
-	SubtaskCount             *Int       `xmlrpc:"subtask_count,omptempty"`
-	SubtaskProjectId         *Many2One  `xmlrpc:"subtask_project_id,omptempty"`
-	TagIds                   *Relation  `xmlrpc:"tag_ids,omptempty"`
-	TimesheetIds             *Relation  `xmlrpc:"timesheet_ids,omptempty"`
-	TotalHours               *Float     `xmlrpc:"total_hours,omptempty"`
-	TotalHoursSpent          *Float     `xmlrpc:"total_hours_spent,omptempty"`
-	UserEmail                *String    `xmlrpc:"user_email,omptempty"`
-	UserId                   *Many2One  `xmlrpc:"user_id,omptempty"`
-	WebsiteMessageIds        *Relation  `xmlrpc:"website_message_ids,omptempty"`
-	WorkingDaysClose         *Float     `xmlrpc:"working_days_close,omptempty"`
-	WorkingDaysOpen          *Float     `xmlrpc:"working_days_open,omptempty"`
-	WorkingHoursClose        *Float     `xmlrpc:"working_hours_close,omptempty"`
-	WorkingHoursOpen         *Float     `xmlrpc:"working_hours_open,omptempty"`
-	WriteDate                *Time      `xmlrpc:"write_date,omptempty"`
-	WriteUid                 *Many2One  `xmlrpc:"write_uid,omptempty"`
 }
 
 // ProjectTasks represents array of project.task model.
