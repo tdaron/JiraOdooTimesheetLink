@@ -30,4 +30,6 @@ Format: TIMESHEETCODE,HEREANOTHER,ANOTHERONE
 
 Exemple: DFA-DF2-P1,DFA-DF2-P1
 
+## TEAMS_WEBHOOK_URL
+That is the incoming webhook url for live notifications in Microsoft Teams ( Success and Errors)
 
