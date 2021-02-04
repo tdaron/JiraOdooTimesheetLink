@@ -41,7 +41,6 @@ func CreateTimesheetLine(name string, email string, timesheetCode string, hours 
 		Date: odoo.NewString(date),
 		Name: odoo.NewString(name),
 		ParentId: task.ParentId,
-
 		}
 
 	_, err = c.CreateAccountAnalyticLine(&accountAnalyticLine)
