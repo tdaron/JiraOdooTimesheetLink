@@ -9,6 +9,7 @@ type ProjectTask struct {
 	Id                       *Int       `xmlrpc:"id,omptempty"`
 	Name                     *String    `xmlrpc:"name,omptempty"`
 	ProjectId                *Many2One  `xmlrpc:"project_id,omptempty"`
+	ParentId                 *Many2One  `xmlrpc:"parent_id,omptempty"`
 }
 
 // ProjectTasks represents array of project.task model.

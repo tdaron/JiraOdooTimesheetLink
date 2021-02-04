@@ -41,6 +41,7 @@ type AccountAnalyticLine struct {
 	UserId                 *Many2One  `xmlrpc:"user_id,omptempty"`
 	WriteDate              *Time      `xmlrpc:"write_date,omptempty"`
 	WriteUid               *Many2One  `xmlrpc:"write_uid,omptempty"`
+	ParentId                *Many2One  `xmlrpc:"parent_task_id,omptempty"`
 }
 
 // AccountAnalyticLines represents array of account.analytic.line model.

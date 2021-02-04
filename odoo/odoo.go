@@ -40,6 +40,8 @@ func CreateTimesheetLine(name string, email string, timesheetCode string, hours 
 		UserId: employee.UserId,
 		Date: odoo.NewString(date),
 		Name: odoo.NewString(name),
+
+
 		}
 
 	_, err = c.CreateAccountAnalyticLine(&accountAnalyticLine)
