@@ -8,7 +8,7 @@ import (
 //Types for JSON Deserialization
 type Worklog struct {
 	TimeSpentSeconds int `json:"timeSpentSeconds"`
-	Date string `json:"created"`
+	Date string `json:"started"`
 	TimeSpent string `json:"timeSpent"`
 }
 
