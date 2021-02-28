@@ -15,6 +15,9 @@ And it should work !
 
 # Environment Variables
 
+## JIRA_TIMESHEET_FIELD
+This is the jira request field with odoo timesheet code 
+
 ## ODOO_ADMIN
 This is your odoo username ( user have to be able to edit all timesheets ) 
 ## ODOO_PASSWORD
