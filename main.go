@@ -40,7 +40,16 @@ var odooCredsOk = false
 
 
 func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	jiraRequest, err := jira.NewWorklogRequest(request.Body)
+
+
+	var timesheetCodeField = os.Getenv("JIRA_TIMESHEET_FIELD")
+	if timesheetCodeField == "" {
+		timesheetCodeField = "customfield_10101" //Default value
+	}
+
+	var body = strings.ReplaceAll(request.Body, timesheetCodeField, "odoo_timesheet_code")
+
+	jiraRequest, err := jira.NewWorklogRequest(body)
 	if err != nil {
 		return ErrorResponse(jira.Request{}, err), nil
 	}

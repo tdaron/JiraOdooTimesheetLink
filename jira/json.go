@@ -25,7 +25,7 @@ type WorklogsField struct {
 
 }
 type RequestFields struct {
-	TimesheetCode string        `json:"customfield_10101"` //CUSTOM FIELD WITH ODOO TIMESHEET CODE
+	TimesheetCode string        `json:"odoo_timesheet_code"` //CUSTOM FIELD WITH ODOO TIMESHEET CODE
 	Worklog       WorklogsField `json:"worklog"`
 }
 
