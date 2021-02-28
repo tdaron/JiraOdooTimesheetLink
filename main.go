@@ -53,6 +53,16 @@ func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (events
 		}
 	}
 
+	var users_whitelist = os.Getenv("USERS_WHITELIST")
+	if users_whitelist != "" {
+		var white_users = strings.Split(users_whitelist,",")
+		if !utils.SliceContains(white_users, jiraRequest.User.Email) {
+			return ErrorResponse(jiraRequest, errors.New(jiraRequest.User.Email+" is not in the whitelist ( "+users_whitelist+")")), nil
+
+		}
+
+	}
+
 
 
 	var lastWorklog = jiraRequest.GetLastWorklog()
