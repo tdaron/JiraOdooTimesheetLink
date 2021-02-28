@@ -30,6 +30,13 @@ Format: TIMESHEETCODE,HEREANOTHER,ANOTHERONE
 
 Exemple: DFA-DF2-P1,DFA-DF2-P1
 
+## USERS_WHITELIST
+This is the users whitelist, if this env var is set, your lambda'll refuse all requests for users that are not in this whitelist
+
+Format: email,email2,email3
+
+Exemple: alice@github.com,bob@github.com
+
 ## TEAMS_WEBHOOK_URL
 That is the incoming webhook url for live notifications in Microsoft Teams ( Success and Errors)
 
