@@ -69,6 +69,10 @@ func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (events
 
 	defer preventOdooCrash(jiraRequest) ////odoo panic if authentication fails, we have to notify user of bad creds
 
+	if jiraRequest.Issue.Fields.TimesheetCode == "" {
+		return ErrorResponse(jiraRequest, errors.New("Can't proceed request with not any timesheet code !")), nil
+	}
+
 	err = odoo.CreateTimesheetLine(
 		jiraRequest.Issue.Key,
 		jiraRequest.User.Email,
